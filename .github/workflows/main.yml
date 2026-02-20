@@ -13,19 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Docker Login GHCR
-        uses: docker/login-action@v2
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          
+      
       - name: Docker build
         run: |
-          docker build -t ghcr.io/andrey666berkov/magazinefront/frontmagazin:${{ github.sha }} .
+          docker build -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} -t ghcr.io/andrey666berkov/magazinefront/frontmagazin:${{ github.sha }} .
 
       - name: Docker push
         run: |
-          docker push ghcr.io/andrey666berkov/magazinefront/frontmagazin:${{ github.sha }}
+          docker push -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io/andrey666berkov/magazinefront/frontmagazin:${{ github.sha }}
 
       - name: Deploy to Server
         run: | 
