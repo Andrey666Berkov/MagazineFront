@@ -31,7 +31,7 @@ jobs:
 
       - name: Deploy to Server
         run: | 
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           cd /home/deploy/frontend
           docker-compose pull
           docker-compose up -d
