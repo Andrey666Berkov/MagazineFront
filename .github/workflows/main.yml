@@ -34,6 +34,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.PASS }}
           port: 22
           script: |
             set -euo pipefail
