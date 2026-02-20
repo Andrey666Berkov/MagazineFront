@@ -19,7 +19,7 @@ jobs:
 
       - name: Docker push
         run: |
-          docker push ghcr.io/${{ github.repository }}/frontmagazin:${{ github.sha }}
+          docker push ghcr.io/$andrey666berkov/magazinefront/frontmagazin:${{ github.sha }}
 
       - name: Deploy to Server
         run: | 
