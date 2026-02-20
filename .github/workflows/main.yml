@@ -31,7 +31,7 @@ jobs:
 
       - name: Deploy to Server with Docker Compose
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no deploy@45.12.238.107 << 'EOF'
           cd /path/to/your/project
           docker-compose pull  
           docker-compose up -d 
