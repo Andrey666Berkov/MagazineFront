@@ -30,14 +30,20 @@ jobs:
           docker push ghcr.io/andrey666berkov/magazinefront/frontmagazin:latest
 
       - name: Deploy to Server with Docker Compose
-        run: |
-          ssh -o StrictHostKeyChecking=no deploy@45.12.238.107 << 'EOF'
-          cd /path/to/your/project
-          docker-compose pull  
-          docker-compose up -d 
-          EOF
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.PASS }} 
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          port: 22
+          script: |
+            set -euo pipefail
+            cd /path/to/your/project
+            docker-compose pull  
+            docker-compose up -d 
+            docker ps
+            
+
+
         
           
 
