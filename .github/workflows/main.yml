@@ -29,14 +29,15 @@ jobs:
           docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
           docker push ghcr.io/andrey666berkov/magazinefront/frontmagazin:${{ github.sha }}
 
-      - name: Deploy to Server
-        run: | 
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'          cd /home/deploy/frontend
-          docker-compose pull
-          docker-compose up -d
+      - name: Deploy to Server with Docker Compose
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd /path/to/your/project
+          docker-compose pull  
+          docker-compose up -d 
           EOF
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} 
         
           
 
