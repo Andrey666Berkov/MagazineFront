@@ -4,38 +4,47 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: 
 
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+  
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
 
     steps:
-      - uses: action/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Login to GHCR
-        uses: docker/login-action@v2
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
+      
       - name: Docker build
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/frontmagazin:${{ github.sha }} .
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          docker build -t ghcr.io/andrey666berkov/magazinefront/frontmagazin:latest .
 
       - name: Docker push
         run: |
-          docker push ghcr.io/${{ github.repository }}/frontmagazin:${{ github.sha }}
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          docker push ghcr.io/andrey666berkov/magazinefront/frontmagazin:latest
 
-      - name: Deploy to Server
-        run: | 
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          cd /home/deploy/frontend
-          docker-compose pull
-          docker-compose up -d
-          EOF
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
+      - name: Deploy to Server with Docker Compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.PASS }}
+          port: 22
+          script: |
+            set -euo pipefail
+            cd /path/to/your/project
+            docker-compose pull  
+            docker-compose up -d 
+            docker ps
+            
+
+
         
           
 
