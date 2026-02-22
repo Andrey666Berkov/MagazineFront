@@ -7,3 +7,15 @@ export type Product = {
   image: string; 
 };
 
+export type Envelope<T> = {
+  Result: T | null;
+  ErrorMy: ErrorMy | null;
+  TimeGenerated: Date;  
+}
+
+type ErrorMy = {
+  Code: string;
+  Message: string;
+}
+
+
