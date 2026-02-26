@@ -4,13 +4,18 @@ export type Product = {
   price: number; 
   description: string;
   category: string;
-  image: string; 
+  image: string;
+  
 };
 
+export type Raring={
+
+}
+
 export type Envelope<T> = {
-  Result: T | null;
-  ErrorMy: ErrorMy | null;
-  TimeGenerated: Date;  
+  result: T | null;
+  errorMy: ErrorMy | null;
+  timeGenerated: Date;  
 }
 
 type ErrorMy = {

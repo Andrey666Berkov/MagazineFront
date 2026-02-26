@@ -1,0 +1,14 @@
+services:
+  mag_frontend:
+    image: mag_front
+    container_name: mag_front
+    ports:
+      - "887:866"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - my_network
+
+networks:
+  my_network:     

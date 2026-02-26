@@ -2,17 +2,17 @@ import axios, { type AxiosResponse }  from "axios";
 import type { Envelope, Product } from "../Type/type";
 
 const instance = axios.create({
-    baseURL: "https://fakestoreapi.com/",    
+    baseURL: "http://localhost:8080/api-product/",    
 })
-export const getProducts =async () => {
-    const response = await instance.get<Product[]>("products");    
-    return response;
+export const getProducts =async ()  => {
+    const response = await instance.get<Envelope<Product[]>>("products");    
+    return response.data;
 }
 
 export const getRegister = async (data: { email: string; password: string }) => {
     console.log(data);    
     const instance = axios.create({
-        baseURL: "http://localhost:5092/api/user/",
+        baseURL: "http://prod_backend:8080/api/user/",
     });
     const response = await instance.post<AxiosResponse<Envelope<{}>>>("registration", data);
     console.log(response);
@@ -36,3 +36,5 @@ export const getLoginTo = async (data: { email: string; password: string }) => {
     }
     return response;
  }
+
+

@@ -4,11 +4,15 @@ import type { Product } from "../Type/type";
 import Cart from "../Component/Cart";
 
 const StoreProductPage = () => {
+    
     const [products, setProducts] = useState<Product[]>([]);
+   
     useEffect(() => {
        async function fetchProducts() {
-            const product = await getProducts();
-            setProducts(product.data);
+           const prod = await getProducts();
+           console.log(prod);          
+
+            setProducts(prod.result ?? []);
         }
         fetchProducts();
     }, [])
